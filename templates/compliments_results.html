@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Compliments Results
+    Compliments Results
 {% endblock %}
 
 {% block content %}
-
-<!-- Your HTML code goes here! -->
-
-
+    <p>Hello {{users_name}}</p>
+    {% if wants_compliments == "yes" %}
+        <ul>
+            {% for compliments in compliments_to_show %}
+            <li>
+                {{ compliments }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        You are the whole
+    {% endif %}
 
 {% endblock %}

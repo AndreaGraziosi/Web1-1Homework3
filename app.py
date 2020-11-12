@@ -6,6 +6,8 @@ import os
 import random
 import requests
 #comment test
+
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -43,7 +45,7 @@ list_of_compliments = [
     'zoetic'
 ]
 
-@app.route('/compliments')
+@app.route('/compliments') 
 def compliments():
     """Shows the user a form to get compliments."""
     return render_template('compliments_form.html')
@@ -51,8 +53,16 @@ def compliments():
 @app.route('/compliments_results')
 def compliments_results():
     """Show the user some compliments."""
+    users_name = request.args.get('users_name')
+    wants_compliments = request.args.get('wants_compliments')
+    num_compliments = int(request.args.get('num_compliments'))
+    compliments_to_show = random.sample(list_of_compliments, num_compliments)
+    
     context = {
-        # TODO: Enter your context variables here.
+    'users_name' : users_name,
+    'wants_compliments': wants_compliments,
+    'num_compliments':num_compliments,
+    'compliments_to_show':compliments_to_show   
     }
 
     return render_template('compliments_results.html', **context)
@@ -74,11 +84,12 @@ animal_to_fact = {
 def animal_facts():
     """Show a form to choose an animal and receive facts."""
 
-    # TODO: Collect the form data and save as variables
+    chosen_animal = request.args.get('animal')
 
     context = {
-        # TODO: Enter your context variables here for:
-        # - the list of all animals (get from animal_to_fact)
+
+    'animals':animal_to_fact.keys(),
+    'fact': animal_to_fact.get(chosen_animal, "")
         # - the chosen animal fact (may be None if the user hasn't filled out the form yet)
     }
     return render_template('animal_facts.html', **context)
@@ -128,22 +139,26 @@ def image_filter():
 
     if request.method == 'POST':
         
-        # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
+        #  Get the user's chosen filter type (whichever one they chose in the form) and save
         # as a variable
-        filter_type = ''
+        filter_type = request.form('filter_type')
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
 
-        # TODO: call `save_image()` on the image & the user's chosen filter type, save the returned
+        #  call `save_image()` on the image & the user's chosen filter type, save the returned
         # value as the new file path
-
-        # TODO: Call `apply_filter()` on the file path & filter type
+        path = save_image(image, filter_type)
+        #  Call `apply_filter()` on the file path & filter type
+        apply_filter(path, filter_type)
 
         image_url = f'/static/images/{filter_type}-{image.filename}'
 
         context = {
-            # TODO: Add context variables here for:
+        'filter_type':filter_types_dict.keys(),
+        'fiters': filter_types_dict.get('filters'),
+        'image_url': image_url
+            #  Add context variables here for:
             # - The full list of filter types
             # - The image URL
         }
@@ -152,7 +167,9 @@ def image_filter():
 
     else: # if it's a GET request
         context = {
-            # TODO: Add context variable here for the full list of filter types
+        'filter_type':filter_types_dict.keys(),
+        'fiters': filter_types_dict.get('filters')
+            # Add context variable here for the full list of filter types
         }
         return render_template('image_filter.html', **context)
 
