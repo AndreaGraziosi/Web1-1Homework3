@@ -15,7 +15,6 @@ Image Filtering
                 Upload a file here (of file type .png, .jpeg, or .gif):
 
                 <input type="file" name="users_image" accept="image/png, image/jpeg, image/gif">
-                
             </label>
         </p>
         <p>
@@ -24,6 +23,7 @@ Image Filtering
 
                 <select name="filter_type">
                     {% for filter in filter_type %}
+                   
                     <option value="{{filter}}">{{filter}}</option>
                     {% endfor %}
                 </select>
@@ -40,7 +40,7 @@ Image Filtering
         Here is your filtered image:
     </p>
     <p>
-        {{image_url}}
+        <img src="{{image_url}}" alt="your filtered photo">
     </p>
 </section>
 {% endif %}

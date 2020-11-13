@@ -117,7 +117,7 @@ def save_image(image, filter_type):
     image.filename = new_file_name
 
     # Construct full file path
-    file_path = os.path.join(app.root_path, 'static/images', file_name)
+    file_path = os.path.join(app.root_path, 'static/images', new_file_name)
     
     # Save the image
     image.save(file_path)
@@ -139,37 +139,33 @@ def image_filter():
 
     if request.method == 'POST':
         
-        #  Get the user's chosen filter type (whichever one they chose in the form) and save
+        # TODO: Get the user's chosen filter type (whichever one they chose in the form) and save
         # as a variable
-        filter_type = request.form('filter_type')
+        filter_types = request.form.get('filter_type')
         
         # Get the image file submitted by the user
         image = request.files.get('users_image')
 
-        #  call `save_image()` on the image & the user's chosen filter type, save the returned
+        # TODO: call `save_image()` on the image & the user's chosen filter type, save the returned
         # value as the new file path
-        path = save_image(image, filter_type)
-        #  Call `apply_filter()` on the file path & filter type
-        apply_filter(path, filter_type)
+        new_file_path = save_image(image, filter_types)
 
-        image_url = f'/static/images/{filter_type}-{image.filename}'
-
+        # TODO: Call `apply_filter()` on the file path & filter type
+        apply_filter(new_file_path, filter_types)
+        image_url = f'/static/images/{image.filename}'
+        # TODO: Add context variables here for:
         context = {
-        'filter_types':filter_types,
-        'fiters': filter_types_dict.get('filters'),
-        'image_url': image_url
-            #  Add context variables here for:
-            # - The full list of filter types
-            # - The image URL
+            'filter_type' : filter_types,
+            'image_url': image_url
         }
-
+        # - The full list of filter types
+            # - The image URL
         return render_template('image_filter.html', **context)
 
     else: # if it's a GET request
-        context = {
-        'filter_type':filter_types_dict.keys(),
-        'fiters': filter_types_dict.get('filters')
-            # Add context variable here for the full list of filter types
+        # TODO: Add context variable here for the full list of filter types
+        context = {   
+        'filter_type': filter_types  
         }
         return render_template('image_filter.html', **context)
 

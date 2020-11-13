@@ -12,17 +12,12 @@ Animal Facts
 
         <label>
             Which animal do you want facts on?
-
-            
             <select name="animal">
                 {% for animal in animals %}
                 <option value="{{animal}}">{{animal}}</option>
-                {% endfor %}
-                
+                {% endfor %}   
             </select>
-
         </label>
-
         <input type="submit" value="Get Fact!">
     </fieldset>
 </form>
@@ -39,5 +34,4 @@ Animal Facts
     </p>
     {% endif %}
 </section>
-
 {% endblock %}
