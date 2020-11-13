@@ -23,8 +23,8 @@ Image Filtering
                 Select your filter:
 
                 <select name="filter_type">
-                    {% for filter in filter_type}
-                    <option value="{{filter}}"">blur</option>
+                    {% for filter in filter_type %}
+                    <option value="{{filter}}">{{filter}}</option>
                     {% endfor %}
                 </select>
             </label>

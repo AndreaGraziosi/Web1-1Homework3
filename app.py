@@ -155,7 +155,7 @@ def image_filter():
         image_url = f'/static/images/{filter_type}-{image.filename}'
 
         context = {
-        'filter_type':filter_types_dict.keys(),
+        'filter_types':filter_types,
         'fiters': filter_types_dict.get('filters'),
         'image_url': image_url
             #  Add context variables here for:
