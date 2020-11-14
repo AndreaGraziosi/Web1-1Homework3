@@ -30,17 +30,24 @@ Gif Search
 </form>
 
 <!-- TODO: Only show this section if there are GIFs to show -->
+
 <section id="form_results">
+    {% if num_of_gifs != "" %}
     <p>
         Here are your GIFs:
     </p>
+
     <!-- TODO: Use a for loop to show each GIF separately in an img tag (and place each one in a 
         separate p tag to show on separate lines). You can get the GIF's image URL by using: 
         gif['media'][0]['gif']['url'] -->
-
-    <p>
-        <img src="https://your/gif/url/goes/here" alt="GIF">
-    </p>
+        {% for GIF in gifs %}
+            <p>
+                
+                <img src="{{GIF}}" alt="GIF">
+            
+            </p>
+        {% endfor %}
+{% endif %}    
 </section>
 
 {% endblock %}
